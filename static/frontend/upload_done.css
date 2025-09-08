@@ -1,0 +1,87 @@
+/* upload_done.css */
+
+.upload-done-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.upload-done-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.upload-done-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.upload-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.7rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.upload-details {
+    text-align: left;
+    font-size: 1rem;
+    color: #444;
+    width: 100%;
+}
+
+.upload-details p {
+    margin: 0.4rem 0;
+}
+
+/* Action buttons */
+.upload-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.edit-btn {
+    background: #2575fc;
+}
+
+.edit-btn:hover {
+    background: #1a5edb;
+}
+
+.delete-btn {
+    background: #e63946;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.home-btn {
+    background: #2a9d8f;
+}
+
+.home-btn:hover {
+    background: #1e7d6d;
+}

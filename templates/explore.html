@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/explore.css') }}">
+
+<div class="explore-container">
+    <h2 class="explore-title">🌍 Explore - Global Gallery</h2>
+
+    <!-- Search & Filter -->
+    <form class="explore-filters" method="get" action="{{ url_for('images.explore') }}">
+        <input type="text" name="tag" placeholder="Search by tags..." value="{{ search_tag }}">
+        
+        <select name="sort">
+            <option value="newest" {% if sort=='newest' %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>Oldest</option>
+        </select>
+        
+        <button type="submit">Search / Filter</button>
+    </form>
+
+    <!-- Gallery Grid -->
+    <div class="explore-grid">
+        {% for img in images %}
+            <div class="explore-card">
+                <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="{{ img.title }}">
+                <h3>{{ img.title }}</h3>
+                <p class="category">Category: {{ img.category }}</p>
+                <p class="tags">Tags: {{ img.tags }}</p>
+                <p class="user">Uploaded by: <b>{{ img.user.username }}</b></p>
+                    <p class="visibility">Visibility: <b>{{ img.visibility|capitalize }}</b></p>
+                <a href="{{ url_for('images.upload_done', image_id=img.id) }}" class="view-btn">View</a>
+            </div>
+        {% else %}
+            <p class="no-results">No images found!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

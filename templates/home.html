@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/home.css') }}">
+
+<div class="home-container">
+    <h2 class="home-title">📸 Welcome to the Image Gallery App</h2>
+
+    {% if session.get('user_id') %}
+        <p class="welcome-msg">
+            Hello, <b>{{ session.get('username') }}</b>!  
+            <a class="upload-link" href="{{ url_for('images.upload_form') }}">Upload a new image</a>
+        </p>
+    {% else %}
+        <p class="welcome-msg">
+            Please 
+            <a class="auth-link" href="{{ url_for('auth.login') }}">login</a> 
+            or 
+            <a class="auth-link" href="{{ url_for('auth.register') }}">register</a> 
+            to upload images.
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/my_uploads.css') }}">
+
+<div class="uploads-container">
+    <h2 class="uploads-title">📂 My Uploads</h2>
+
+    {% if images %}
+    <div class="uploads-grid">
+        {% for img in images %}
+        <div class="upload-card">
+            <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="{{ img.title }}" class="upload-thumbnail">
+            <div class="upload-info">
+                <b>{{ img.title }}</b> <span class="category">({{ img.category }})</span><br>
+                <small>Tags: {{ img.tags }}</small><br>
+                    <small>Visibility: <b>{{ img.visibility|capitalize }}</b></small><br>
+            </div>
+            <a class="btn view-btn" href="{{ url_for('images.upload_done', image_id=img.id) }}">👁 View</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="no-uploads"> You haven't uploaded any images yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

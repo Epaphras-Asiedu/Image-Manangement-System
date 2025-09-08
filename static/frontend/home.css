@@ -1,0 +1,34 @@
+/* home.css */
+
+.home-container {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+.home-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.welcome-msg {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.upload-link,
+.auth-link {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.upload-link:hover,
+.auth-link:hover {
+    text-decoration: underline;
+    color: #1a5edb;
+}
