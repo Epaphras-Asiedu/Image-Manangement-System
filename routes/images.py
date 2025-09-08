@@ -1,3 +1,18 @@
+from flask import jsonify
+# Toggle visibility route for AJAX
+@image_bp.route('/toggle_visibility/<int:image_id>', methods=['POST'])
+def toggle_visibility(image_id):
+    image = Image.query.get_or_404(image_id)
+    user = current_user()
+    if not user or image.user_id != user.id:
+        return jsonify({'error': 'Unauthorized'}), 403
+    data = request.get_json()
+    new_vis = data.get('visibility')
+    if new_vis in ['public', 'private']:
+        image.visibility = new_vis
+        db.session.commit()
+        return jsonify({'success': True})
+    return jsonify({'error': 'Invalid visibility'}), 400
 import os
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
@@ -14,7 +29,8 @@ def allowed_file(filename):
 
 @image_bp.route('/')
 def home():
-    return render_template('home.html')
+    images = Image.query.filter_by(deleted=False, visibility='public').order_by(Image.upload_date.desc()).limit(5).all()
+    return render_template('home.html', images=images)
 
 @image_bp.route('/upload_form', methods=['GET','POST'])
 def upload_form():

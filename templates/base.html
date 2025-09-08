@@ -4,29 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='frontend/base.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Image Gallery App</title>
 </head>
 <body>
     <header>
-    <h1 id="myh1">Image Gallery App</h1>
-    <nav id="nav">
-    <a class="nav-link" href="{{ url_for('images.home') }}">Home</a> |
-    <a class="nav-link" href="{{ url_for('images.explore') }}">Explore</a> |
-    {% if session.get('user_id') %}
-        <a class="nav-link" href="{{ url_for('images.my_uploads') }}">My Uploads</a> |
-        <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout ({{ session.get('username') }})</a>
-    {% else %}
-        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a> |
-        <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-    {% endif %}
-    </nav>
+        <h1 id="myh1"><i class="fa-solid fa-image"></i> Image Gallery App</h1>
+        <nav id="nav">
+            <a class="nav-link" href="{{ url_for('images.home') }}"><i class="fa-solid fa-house"></i> Home</a>
+            <a class="nav-link" href="{{ url_for('images.explore') }}"><i class="fa-solid fa-globe"></i> Explore</a>
+            {% if session.get('user_id') %}
+                <a class="nav-link" href="{{ url_for('images.my_uploads') }}"><i class="fa-solid fa-folder-open"></i> My Uploads</a>
+                <a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout ({{ session.get('username') }})</a>
+                <span class="profile-avatar" title="Profile"><i class="fa-solid fa-user-circle"></i></span>
+            {% else %}
+                <a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                <a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fa-solid fa-user-plus"></i> Register</a>
+            {% endif %}
+        </nav>
     </header>
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">Showcase Your Memories in Style</h2>
+            <p class="hero-desc">Upload, explore, and share beautiful images with the world. Enjoy a modern, elegant gallery experience!</p>
+            <a href="{{ url_for('images.upload_form') }}" class="btn hero-btn"><i class="fa-solid fa-upload"></i> Get Started</a>
+        </div>
+        <svg class="hero-bg" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="400" cy="100" rx="380" ry="80" fill="#e0c3fc" opacity="0.3"/>
+            <ellipse cx="400" cy="120" rx="320" ry="60" fill="#6a82fb" opacity="0.15"/>
+        </svg>
+    </section>
 
     <main id="main-content">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div style="color: {% if category=='danger' %}red{% else %}green{% endif %};">
+                <div class="flash-message {% if category=='danger' %}danger{% else %}success{% endif %}">
                     {{ message }}
                 </div>
             {% endfor %}
@@ -35,6 +49,68 @@
 
     {% block content %}{% endblock %}
 
-    </main>
+
+
+    <footer>
+        &copy; {{ 2025 }} Image Gallery App
+    </footer>
+
+    <script>
+// Hamburger menu toggle for mobile
+const hamburger = document.createElement('div');
+hamburger.className = 'hamburger';
+hamburger.innerHTML = '<span></span><span></span><span></span>';
+document.querySelector('header').appendChild(hamburger);
+const nav = document.getElementById('nav');
+hamburger.onclick = () => nav.classList.toggle('active');
+
+// Animated slideshow transitions
+function showSlidesAnimated() {
+    let slides = document.getElementsByClassName("slide-img");
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides[i].style.opacity = 0;
+    }
+    window.slideIndex = window.slideIndex ? window.slideIndex + 1 : 1;
+    if (window.slideIndex > slides.length) {window.slideIndex = 1}
+    if (slides.length > 0) {
+        slides[window.slideIndex-1].style.display = "block";
+        setTimeout(() => { slides[window.slideIndex-1].style.opacity = 1; }, 100);
+    }
+    setTimeout(showSlidesAnimated, 2200);
+}
+showSlidesAnimated();
+
+// Loading spinner for images
+const images = document.querySelectorAll('.slide-img');
+images.forEach(img => {
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    img.parentNode.insertBefore(spinner, img);
+    img.style.display = 'none';
+    img.onload = () => {
+        spinner.remove();
+        img.style.display = 'block';
+    };
+    img.onerror = () => spinner.remove();
+});
+
+// Theme switcher (light/dark mode)
+const footer = document.querySelector('footer');
+if (footer) {
+    const themeBtn = document.createElement('button');
+    themeBtn.className = 'btn';
+    themeBtn.textContent = 'Toggle Theme';
+    themeBtn.style.marginLeft = '18px';
+    footer.appendChild(themeBtn);
+    let dark = false;
+    themeBtn.onclick = () => {
+        dark = !dark;
+        document.body.style.background = dark ? 'linear-gradient(135deg, #222 0%, #6a82fb 100%)' : 'linear-gradient(135deg, #f8fafc 0%, #e0c3fc 100%)';
+        document.body.style.color = dark ? '#eee' : '#222';
+        footer.style.background = dark ? 'linear-gradient(90deg, #222 0%, #6a82fb 100%)' : 'linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%)';
+    };
+}
+</script>
 </body>
 </html>

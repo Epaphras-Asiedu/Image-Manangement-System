@@ -12,12 +12,31 @@
         </p>
     {% else %}
         <p class="welcome-msg">
-            Please 
-            <a class="auth-link" href="{{ url_for('auth.login') }}">login</a> 
-            or 
-            <a class="auth-link" href="{{ url_for('auth.register') }}">register</a> 
-            to upload images.
+            Welcome! Discover beautiful images from our community below.<br>
+            Please <a class="auth-link" href="{{ url_for('auth.login') }}">login</a> or <a class="auth-link" href="{{ url_for('auth.register') }}">register</a> to upload your own images.
         </p>
+        <div id="slideshow-container">
+            <div class="slideshow-images">
+                {% for img in images %}
+                    <img class="slide-img" src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="{{ img.title }}" style="display:none; width:200px; height:120px; object-fit:cover; margin:0 10px; border-radius:10px;">
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+        // Simple JS slideshow
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide-img");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            if (slides.length > 0) slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+        showSlides();
+        </script>
     {% endif %}
 </div>
 {% endblock %}

@@ -36,10 +36,18 @@
         {% endif %}
 
             <div class="form-group">
-                <label for="visibility">Visibility</label>
-                <select id="visibility" name="visibility">
-                    <option value="public" {% if image and image.visibility == 'public' %}selected{% endif %}>Public (shown in Explore & My Uploads)</option>
-                    <option value="private" {% if image and image.visibility == 'private' %}selected{% endif %}>Private (shown only in My Uploads)</option>
+                <label for="visibility">Visibility
+                    <span title="Public images are visible to everyone in Explore. Private images are only visible to you in My Uploads." style="margin-left:6px; cursor:help; color:#6a82fb;">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </span>
+                </label>
+                <select id="visibility" name="visibility" style="font-weight:600;">
+                    <option value="public" {% if image and image.visibility == 'public' %}selected{% endif %} style="color:#43e97b;">
+                        🌍 Public (shown in Explore & My Uploads)
+                    </option>
+                    <option value="private" {% if image and image.visibility == 'private' %}selected{% endif %} style="color:#fc5c7d;">
+                        🔒 Private (shown only in My Uploads)
+                    </option>
                 </select>
             </div>
 

@@ -1,3 +1,21 @@
+.toggle-visibility {
+    margin-left: 8px;
+    background: linear-gradient(90deg, #6a82fb 0%, #43e97b 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #e0c3fc44;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.toggle-visibility:hover {
+    background: linear-gradient(90deg, #fc5c7d 0%, #43e97b 100%);
+    color: #fff;
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px #fc5c7d44;
+}
 /* my_uploads.css */
 
 .uploads-container {

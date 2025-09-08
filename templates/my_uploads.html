@@ -13,7 +13,21 @@
             <div class="upload-info">
                 <b>{{ img.title }}</b> <span class="category">({{ img.category }})</span><br>
                 <small>Tags: {{ img.tags }}</small><br>
-                    <small>Visibility: <b>{{ img.visibility|capitalize }}</b></small><br>
+                    <small>
+                        Visibility:
+                        {% if img.visibility == 'public' %}
+                            <span style="color:#43e97b; font-weight:600;">
+                                🌍 Public
+                            </span>
+                        {% else %}
+                            <span style="color:#fc5c7d; font-weight:600;">
+                                🔒 Private
+                            </span>
+                        {% endif %}
+                        <button class="btn toggle-visibility" data-id="{{ img.id }}" data-current="{{ img.visibility }}" title="Toggle visibility">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </small><br>
             </div>
             <a class="btn view-btn" href="{{ url_for('images.upload_done', image_id=img.id) }}">👁 View</a>
         </div>
@@ -23,4 +37,23 @@
         <p class="no-uploads"> You haven't uploaded any images yet.</p>
     {% endif %}
 </div>
+<script>
+document.querySelectorAll('.toggle-visibility').forEach(btn => {
+    btn.onclick = function() {
+        const imageId = this.getAttribute('data-id');
+        const current = this.getAttribute('data-current');
+        const newVis = current === 'public' ? 'private' : 'public';
+        if (confirm(`Change visibility to ${newVis.toUpperCase()}?`)) {
+            fetch(`/toggle_visibility/${imageId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ visibility: newVis })
+            }).then(res => {
+                if (res.ok) location.reload();
+                else alert('Failed to change visibility.');
+            });
+        }
+    };
+});
+</script>
 {% endblock %}
